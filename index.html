@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+</head>
+<body>
+  <canvas id="myGame" width="480" height="272"></canvas>
+  <script>
+  	var game = document.getElementById("myGame");
+  	var ctx = game.getContext('2d');
+  	var level = 1;
+  	var gravity = 1;
+  	var perso = {
+  		color : "#224488",
+  		x : 200,
+  		y : 0,
+  		width : 30,
+  		height : 30,
+  		mass : 0.1
+  	}
+  	function loop() {
+  		if(perso.y > 272-40) {
+  			gravity = 0;
+  		} else {
+  			gravity++;
+  		}
+  		if(perso.x < 0) {
+  			perso.x = 0;
+  		}
+  		if(perso.x > 480-30) {
+  			perso.x = 480-30;
+  		}
+  		perso.y += gravity * perso.mass;	
+  		if(level == 0) { 
+
+  		}
+  		if(level == 1) {
+  			var img = new Image();
+  			img.src = 'image.jpg';
+  			img.onload = function() {
+  				ctx.drawImage(img, 0, 0, 480, 272);
+  				ctx.fillStyle = perso.color
+  				ctx.fillRect(perso.x, perso.y, perso.width, perso.height)
+  				requestAnimationFrame(loop);
+  			}
+  		}
+  	}
+  	window.addEventListener('keydown', function(e) {
+  		if(e.code == "Space") {
+  			perso.y -= 50;
+  		}
+  		else if(e.code == "ArrowLeft") {
+  			perso.x -= 30;
+  		}
+  		else if(e.code == "ArrowRight") {
+  			perso.x += 30;
+  		}
+  	});
+  	requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
